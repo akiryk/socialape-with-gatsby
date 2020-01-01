@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
+
+const UL = styled.ul`
+  list-style: none;
+  color: #777;
+`;
 
 const Screams = () => {
   const [screams, setScreams] = useState([]);
@@ -20,14 +26,14 @@ const Screams = () => {
     <>
       <h2>Messages</h2>
       {screams.length ? (
-        <ul>
+        <UL>
           {screams.map(({ screamId, body, userHandle, userImage }) => (
             <li key={screamId}>
               <p>{body}</p>
               <small>by {userHandle}</small>
             </li>
           ))}
-        </ul>
+        </UL>
       ) : (
         <p>...Loading still...</p>
       )}
