@@ -1,10 +1,8 @@
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import Header from 'components/theme/Header'
-import './layout.css'
-import 'unnamed'
+import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
+import Header from 'components/theme/Header';
 
-export default ({ children, isLoggedIn, logout }) => {
+const Layout = ({ children, isLoggedIn, logout }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -15,7 +13,7 @@ export default ({ children, isLoggedIn, logout }) => {
         }
       }
     `
-  )
+  );
 
   return (
     <>
@@ -26,5 +24,7 @@ export default ({ children, isLoggedIn, logout }) => {
       />
       <main>{children}</main>
     </>
-  )
-}
+  );
+};
+
+export default Layout;

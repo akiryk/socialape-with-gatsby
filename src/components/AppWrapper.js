@@ -5,7 +5,7 @@ import setAuthToken from 'helpers/setAuthToken';
 import Layout from 'components/common/Layout';
 import Context from './common/Context';
 
-export default ({ children }) => {
+const AppWrapper = ({ children }) => {
   const { user, dispatchUserAction } = useContext(Context);
   const [loading, setLoading] = useState(true);
 
@@ -56,7 +56,6 @@ export default ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.delete(`${process.env.API}/user/logout`);
       dispatchUserAction({ type: 'LOGOUT' });
       window.localStorage.removeItem('token');
       setAuthToken(false);
@@ -84,3 +83,5 @@ export default ({ children }) => {
     </>
   );
 };
+
+export default AppWrapper;

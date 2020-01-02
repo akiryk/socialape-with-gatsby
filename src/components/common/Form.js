@@ -4,7 +4,7 @@ import { navigate } from 'gatsby';
 import Context from 'components/common/Context';
 import setAuthToken from 'helpers/setAuthToken';
 
-export default ({ form }) => {
+const Form = ({ form }) => {
   const { dispatchUserAction } = useContext(Context);
   const [isSubmitting, setSubmitting] = useState(false);
   const [details, setDetails] = useState({
@@ -48,7 +48,6 @@ export default ({ form }) => {
             password,
           });
 
-          console.log('Success', data);
           const token = `Bearer ${data.token}`;
 
           await setAuthToken(token);
@@ -57,22 +56,27 @@ export default ({ form }) => {
           navigate('/app/tasks/');
         }
       } else {
+        /*
+         email: req.body.email,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    handle: req.body.handle,
+        */
         if (!username || !email || !password) {
           alert('aye sir');
         } else {
-          const { data } = await axios.post(
-            `${process.env.API}/user/register`,
-            {
-              username,
-              email,
-              password,
-            }
-          );
+          const { data } = await axios.post(`${process.env.API}/signup`, {
+            username,
+            email,
+            password,
+          });
 
-          await setAuthToken(data.token);
+          const token = `Bearer ${data.token}`;
+
+          await setAuthToken(token);
           dispatchUserAction({ type: 'SAVE_USER', payload: data });
-          window.localStorage.setItem('token', data.token);
-          navigate('/app/tasks/');
+          window.localStorage.setItem('token', token);
+          navigate('/app/screams/');
         }
       }
     } catch (err) {
@@ -97,57 +101,44 @@ export default ({ form }) => {
   };
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        {form === 'register' && (
-          <div className="input-field black-input">
-            <span className="user-icon" />
-            <input
-              onChange={handleChange}
-              onBlur={handleBlur}
-              type="text"
-              placeholder="Enter your username"
-              name="username"
-            />
-            {errors.username && (
-              <span style={{ color: 'red' }}>{errors.username}</span>
-            )}
-          </div>
-        )}
-        <div className="input-field black-input">
-          <span className="email-icon" />
+    <form onSubmit={handleSubmit}>
+      {form === 'register' && (
+        <>
           <input
             onChange={handleChange}
             onBlur={handleBlur}
-            type="email"
-            placeholder="Enter your email"
-            name="email"
+            type="text"
+            placeholder="Enter your username"
+            name="username"
           />
-          {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
-        </div>
-        <div className="input-field black-input">
-          <span className="lock-icon" />
-          <input
-            onChange={handleChange}
-            onBlur={handleBlur}
-            type="password"
-            placeholder="Enter your password"
-            name="password"
-          />
-          {errors.password && (
-            <span style={{ color: 'red' }}>{errors.password}</span>
+          {errors.username && (
+            <span style={{ color: 'red' }}>{errors.username}</span>
           )}
-        </div>
-        <div className="center-text">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="btn btn-rounded gradient-green"
-          >
-            {form}
-          </button>
-        </div>
-      </form>
-    </div>
+        </>
+      )}
+      <input
+        onChange={handleChange}
+        onBlur={handleBlur}
+        type="email"
+        placeholder="Enter your email"
+        name="email"
+      />
+      {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+      <input
+        onChange={handleChange}
+        onBlur={handleBlur}
+        type="password"
+        placeholder="Enter your password"
+        name="password"
+      />
+      {errors.password && (
+        <span style={{ color: 'red' }}>{errors.password}</span>
+      )}
+      <button type="submit" disabled={isSubmitting}>
+        {form}
+      </button>
+    </form>
   );
 };
+
+export default Form;

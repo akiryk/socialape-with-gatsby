@@ -4,7 +4,7 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `Not Todo app`,
+    title: `Start Today`,
     description: `A demo Gatsby app connected to a REST API`,
     author: `@smakosh`,
   },
