@@ -12,7 +12,8 @@ const AppWrapper = ({ children }) => {
   const fetchUser = async () => {
     try {
       const token = window.localStorage.getItem('token');
-      if (token) {
+      console.log('token', token);
+      if (token && token !== 'undefined') {
         axios.defaults.headers.common['Authorization'] = token;
         const { data } = await axios({
           method: 'GET',
@@ -21,29 +22,32 @@ const AppWrapper = ({ children }) => {
             'Content-Type': 'application/json',
           },
         });
-        await setAuthToken(data.token);
         dispatchUserAction({ type: 'SAVE_USER', payload: data.user });
-        window.localStorage.setItem('token', data.token);
-
         if (
           window.location.pathname === '/app/login' ||
           window.location.pathname === '/app/register' ||
           window.location.pathname === '/app' ||
           window.location.pathname === '/app/login/' ||
-          window.location.pathname === '/app/register/' ||
-          window.location.pathname === '/app/'
+          window.location.pathname === '/app/register/'
         ) {
-          navigate('/app/tasks/');
+          navigate('/app/screams/');
         }
         setLoading(false);
       } else {
+        console.log(
+          'here?',
+          window.location.pathname,
+          window.location.pathname === '/app/add-scream'
+        );
         if (
           window.location.pathname === '/app/tasks' ||
           window.location.pathname === '/app/tasks/' ||
           window.location.pathname === '/app/task' ||
           window.location.pathname === '/app/task/' ||
           window.location.pathname === '/app/task/new/' ||
-          window.location.pathname === '/app/task/new'
+          window.location.pathname === '/app/task/new' ||
+          window.location.pathname === '/app/add-scream' ||
+          window.location.pathname === '/app/add-scream/'
         ) {
           navigate('/app/login/');
         }

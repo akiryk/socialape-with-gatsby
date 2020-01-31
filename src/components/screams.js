@@ -27,10 +27,10 @@ const Screams = () => {
       <h2>Messages</h2>
       {screams.length ? (
         <UL>
-          {screams.map(({ screamId, body, userHandle, userImage }) => (
+          {screams.map(({ screamId, body, username, userImage }) => (
             <li key={screamId}>
               <p>{body}</p>
-              <small>by {userHandle}</small>
+              <small>by {username}</small>
             </li>
           ))}
         </UL>

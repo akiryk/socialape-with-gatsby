@@ -34,6 +34,9 @@ const Header = ({ siteTitle, isLoggedIn, logout }) => (
         <li>
           <Link to="/app/screams">Screams</Link>
         </li>
+        <li>
+          <Link to="/app/add-scream">Create Scream</Link>
+        </li>
         {isLoggedIn && (
           <Button type="submit" onClick={logout}>
             Logout

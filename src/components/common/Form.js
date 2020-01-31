@@ -53,7 +53,7 @@ const Form = ({ form }) => {
           await setAuthToken(token);
           dispatchUserAction({ type: 'SAVE_USER', payload: data });
           window.localStorage.setItem('token', token);
-          navigate('/app/tasks/');
+          navigate('/app/screams/');
         }
       } else {
         /*
